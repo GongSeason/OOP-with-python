@@ -18,7 +18,7 @@ class Item:
         
     
     def calculate_total_price(self):
-        return self.name*self.quantity
+        return self.price*self.quantity
     
     def apply_discount(self):
         self.price = self.price * self.pay_rate
@@ -29,7 +29,7 @@ class Item:
             reader = csv.DictReader(f)
             items = list(reader)
         for item in items:
-            print(item)
+            # print(item)
             Item(
                 name = item.get('name'),
                 price=float(item.get('price')),
@@ -51,5 +51,25 @@ class Item:
 
 
     def __repr__(self) -> str:
-        return f"Item('{self.name}',{self.price},{self.quantity})"
+        return f"{self.__class__.__name__}('{self.name}',{self.price},{self.quantity})"
     
+class Phone(Item):
+    def __init__(self, name: str, price: float, quantity: int,broken_phones=0) -> None:
+        super().__init__(name, price, quantity) 
+
+        # Run validations to the received arguments
+        assert broken_phones >=0, f"Broken phones {broken_phones} is not greater or equal than zero!"
+        
+        # Assign to self object
+        self.broken_phone = broken_phones
+
+
+
+phone1 = Phone("jscPhonev10", 500,5,1)
+print(phone1.calculate_total_price())
+
+phone2 = Phone("jscPhonev20",700,5)
+
+print(Item.all)
+print(Phone.all)
+
